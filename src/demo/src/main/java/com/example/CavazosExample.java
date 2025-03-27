@@ -2,6 +2,7 @@ package com.example;
 
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Stack;
 
 import org.json.simple.*;
 
@@ -9,8 +10,11 @@ public class CavazosExample {
   public static String fileName =
   "C:\\Users\\josep\\OneDrive\\Desktop\\Github\\assignment-general-cavazos-commander-app\\src\\demo\\src\\main\\java\\com\\example\\commands.json";
   
-   public static JSONArray commandJSONArray = JSONFile.readArray(fileName);
+  public static JSONArray commandJSONArray = JSONFile.readArray(fileName);
   public static String[] commandArray = getCommandArray(commandJSONArray);
+
+  public static Stack<String> redo = new Stack<>(); 
+  public static Stack<String> undo = new Stack<>(); 
 
   public static void main(String[] args) {
     Scanner scan = new Scanner(System.in);
@@ -21,12 +25,7 @@ public class CavazosExample {
       input = scan.nextLine();
       executeCommand(input);
     }
-
-
-
     scan.close();
-
-   
   }
 
   public static void printLine(){
@@ -51,20 +50,22 @@ public class CavazosExample {
         case "l": 
           print(commandArray);
           break;
+        case "i":
+          randomCommand(commandArray);
+          break;
+        case "q":
+          break;
         default:
           System.out.println("Please input valid command");
           break;
      }
   }
   // randomly issue commands from General Cavazos
-  public static void randomCommand(String[] commandArray, int numCommand) {
+  public static void randomCommand(String[] commandArray){
     Random rand = new Random();
-    System.out.printf("Number\tCommand\n");
-    System.out.printf("------\t---------------\n");
-    for (int i = 0; i < numCommand; i++) {
-      int randIndex = rand.nextInt(commandArray.length);
-      System.out.printf("%04d\t%s\n", i, commandArray[randIndex]);
-    }
+    String command = commandArray[rand.nextInt(commandArray.length)];
+    undo.push(command);
+    System.out.println("[Command Issued]: General Cavazos issues the troops to " + command );
   }
 
   // print command array
