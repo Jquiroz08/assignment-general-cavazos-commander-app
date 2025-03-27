@@ -1,6 +1,8 @@
 package com.example;
 
 import java.util.Random;
+import java.util.Scanner;
+
 import org.json.simple.*;
 
 public class CavazosExample {
@@ -8,22 +10,41 @@ public class CavazosExample {
   public static void main(String[] args) {
     String fileName =
     "C:\\Users\\josep\\OneDrive\\Desktop\\Github\\assignment-general-cavazos-commander-app\\src\\demo\\src\\main\\java\\com\\example\\commands.json";
-
-    // read coammands
+    
     JSONArray commandJSONArray = JSONFile.readArray(fileName);
     String[] commandArray = getCommandArray(commandJSONArray);
-    System.out.println(commandArray);
+    
+    Scanner scan = new Scanner(System.in);
+    String input = "";
 
-    // print list of all commands
-    System.out.println("----- List of all commands -----");
-    print(commandArray);
+    while(!(input.equals("q"))){
+      printMenu();
+      input = scan.nextLine();
+    }
 
-    System.out.println(
-      "----- Issuing 5 random commands from General Cavazos -----"
-    );
-    randomCommand(commandArray, 5);
+
+
+    scan.close();
+
+   
   }
 
+  public static void printLine(){
+    System.out.println("-------------------------------------------------------");
+  }
+
+  public static void printMenu(){
+    printLine();
+    System.out.println("General Cavazos Commander App");
+    printLine();
+    System.out.println("i:      Issue Command");
+    System.out.println("l:      List of commands");
+    System.out.println("u:      Undo last command that was issued");
+    System.out.println("r:      Redo last command that was issued");
+    System.out.println("q:      Quit");
+    printLine();
+    System.out.println("Enter a command:");
+  }
   // randomly issue commands from General Cavazos
   public static void randomCommand(String[] commandArray, int numCommand) {
     Random rand = new Random();
