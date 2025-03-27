@@ -6,20 +6,20 @@ import java.util.Scanner;
 import org.json.simple.*;
 
 public class CavazosExample {
+  public static String fileName =
+  "C:\\Users\\josep\\OneDrive\\Desktop\\Github\\assignment-general-cavazos-commander-app\\src\\demo\\src\\main\\java\\com\\example\\commands.json";
+  
+   public static JSONArray commandJSONArray = JSONFile.readArray(fileName);
+  public static String[] commandArray = getCommandArray(commandJSONArray);
 
   public static void main(String[] args) {
-    String fileName =
-    "C:\\Users\\josep\\OneDrive\\Desktop\\Github\\assignment-general-cavazos-commander-app\\src\\demo\\src\\main\\java\\com\\example\\commands.json";
-    
-    JSONArray commandJSONArray = JSONFile.readArray(fileName);
-    String[] commandArray = getCommandArray(commandJSONArray);
-    
     Scanner scan = new Scanner(System.in);
     String input = "";
 
     while(!(input.equals("q"))){
       printMenu();
       input = scan.nextLine();
+      executeCommand(input);
     }
 
 
@@ -44,6 +44,17 @@ public class CavazosExample {
     System.out.println("q:      Quit");
     printLine();
     System.out.println("Enter a command:");
+  }
+
+  public static void executeCommand(String input){
+     switch(input){
+        case "l": 
+          print(commandArray);
+          break;
+        default:
+          System.out.println("Please input valid command");
+          break;
+     }
   }
   // randomly issue commands from General Cavazos
   public static void randomCommand(String[] commandArray, int numCommand) {
