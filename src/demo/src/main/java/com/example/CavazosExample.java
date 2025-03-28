@@ -7,32 +7,34 @@ import java.util.Stack;
 import org.json.simple.*;
 
 public class CavazosExample {
-  public static String fileName =
-  "C:\\Users\\josep\\OneDrive\\Desktop\\Github\\assignment-general-cavazos-commander-app\\src\\demo\\src\\main\\java\\com\\example\\commands.json";
-  
+  // Import commands json into an array
+  public static String fileName = "C:\\Users\\josep\\OneDrive\\Desktop\\Github\\assignment-general-cavazos-commander-app\\src\\demo\\src\\main\\java\\com\\example\\commands.json";
   public static JSONArray commandJSONArray = JSONFile.readArray(fileName);
   public static String[] commandArray = getCommandArray(commandJSONArray);
 
-  public static Stack<String> redo = new Stack<>(); 
-  public static Stack<String> undo = new Stack<>(); 
+  // Stacks to keep track of commands
+  public static Stack<String> redo = new Stack<>();
+  public static Stack<String> undo = new Stack<>();
 
   public static void main(String[] args) {
     Scanner scan = new Scanner(System.in);
     String input = "";
 
-    while(!(input.equals("q"))){
+    while (!(input.equals("q"))) {
       printMenu();
       input = scan.nextLine();
       executeCommand(input);
     }
+
     scan.close();
   }
 
-  public static void printLine(){
+  public static void printLine() {
     System.out.println("-------------------------------------------------------");
   }
 
-  public static void printMenu(){
+  // Print Menu
+  public static void printMenu() {
     printLine();
     System.out.println("General Cavazos Commander App");
     printLine();
@@ -45,49 +47,55 @@ public class CavazosExample {
     System.out.println("Enter a command:");
   }
 
-  public static void executeCommand(String input){
-     switch(input){
-        case "l": 
-          print(commandArray);
-          break;
-        case "i":
-          randomCommand(commandArray);
-          break;
-        case "u":
-          undoCommand();
-          break;
-        case "r":
-          redoCommand();
-          break;
-        case "q":
-          break;
-        default:
-          System.out.println("Error: Please input valid command");
-          break;
-     }
+  // Executes command based on user input
+  public static void executeCommand(String input) {
+    switch (input) {
+      case "l":
+        print(commandArray);
+        break;
+      case "i":
+        randomCommand(commandArray);
+        break;
+      case "u":
+        undoCommand();
+        break;
+      case "r":
+        redoCommand();
+        break;
+      case "q":
+        break;
+      default:
+        System.out.println("ERROR: Please input valid command");
+        break;
+    }
   }
+
   // randomly issue commands from General Cavazos
-  public static void randomCommand(String[] commandArray){
+  public static void randomCommand(String[] commandArray) {
     Random rand = new Random();
     String command = commandArray[rand.nextInt(commandArray.length)];
     undo.push(command);
-    System.out.println("[Command Issued]: General Cavazos issues the troops to do: " + command );
+    System.out.println("[Command Issued]: General Cavazos issues the troops to do: " + command);
   }
 
-  public static void undoCommand(){
-    if(undo.isEmpty()){
-      System.out.println("Error: There are no commands to undo");
+  // Undo the command that was most recently issued
+  public static void undoCommand() {
+    if (undo.isEmpty()) {
+      System.out.println("ERROR: There are no commands to undo");
       return;
-    } 
+    }
+
     redo.push(undo.peek());
     System.out.println("[Undo Command Issued]: General Cavazos issues the troops to undo: " + undo.pop());
   }
 
-  public static void redoCommand(){
-    if(redo.isEmpty()){
-      System.out.println("Error: There are no commands to redo");
+  // Redo command that was recently undone
+  public static void redoCommand() {
+    if (redo.isEmpty()) {
+      System.out.println("ERROR: There are no commands to redo");
       return;
-    } 
+    }
+
     undo.push(redo.peek());
     System.out.println("[Redo Command Issued]: General Cavazos issues the troops to redo: " + redo.pop());
   }
