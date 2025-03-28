@@ -53,6 +53,12 @@ public class CavazosExample {
         case "i":
           randomCommand(commandArray);
           break;
+        case "u":
+          undoCommand();
+          break;
+        case "r":
+          redoCommand();
+          break;
         case "q":
           break;
         default:
@@ -66,6 +72,24 @@ public class CavazosExample {
     String command = commandArray[rand.nextInt(commandArray.length)];
     undo.push(command);
     System.out.println("[Command Issued]: General Cavazos issues the troops to " + command );
+  }
+
+  public static void undoCommand(){
+    if(undo.isEmpty()){
+      System.out.println("Error: There are no commands to undo");
+      return;
+    } 
+    redo.push(undo.peek());
+    System.out.println("[Undo Command Issued]: General Cavazos issues the troops to undo: " + undo.pop());
+  }
+
+  public static void redoCommand(){
+    if(redo.isEmpty()){
+      System.out.println("Error: There are no commands to redo");
+      return;
+    } 
+    undo.push(redo.peek());
+    System.out.println("[Redo Command Issued]: General Cavazos issues the troops to redo: " + redo.pop());
   }
 
   // print command array
