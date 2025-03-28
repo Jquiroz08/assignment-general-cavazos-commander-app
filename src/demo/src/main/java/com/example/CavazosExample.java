@@ -62,7 +62,7 @@ public class CavazosExample {
         case "q":
           break;
         default:
-          System.out.println("Please input valid command");
+          System.out.println("Error: Please input valid command");
           break;
      }
   }
@@ -71,7 +71,7 @@ public class CavazosExample {
     Random rand = new Random();
     String command = commandArray[rand.nextInt(commandArray.length)];
     undo.push(command);
-    System.out.println("[Command Issued]: General Cavazos issues the troops to " + command );
+    System.out.println("[Command Issued]: General Cavazos issues the troops to do: " + command );
   }
 
   public static void undoCommand(){
